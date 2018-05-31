@@ -1,0 +1,189 @@
+<h2>Введите данные</h2>
+<form name="scanForm" novalidate>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Плановая дата</span>
+  </div>
+	<input id="datepicker" 
+		placeholder="Выберите планируемую дату приема работника..." 
+		class="form-control" 
+		name="selectedPlannedDate" 
+		ng-model="selectedPlannedDate" 
+		required>
+  <div class="input-group-append">
+    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+  </div>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Вид приема</span>
+  </div>
+	<select name="selectedTypeReception" 
+		ng-model="selectedTypeReception" 
+		class="form-control"  
+		ng-options="x.Title for x in typeReceptions" 
+		ng-change="update_rates();" 
+		required>
+	</select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Количество ставок</span>
+  </div>
+	<select class="form-control" 
+		name="selectedRates" 
+		ng-model="selectedRates" 
+		ng-init="selectedRates = rates[0]" 
+		ng-options="x.rate_number for x in rates" 
+		ng-disabled="rates_disabled">
+	</select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Источник комплектования</span>
+  </div>
+	<select class="form-control" 
+		name="selectedRecSource" 
+		ng-model="selectedRecSource" 
+		ng-options="x.Title for x in recSources" 
+		required>
+	</select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Подразделение</span>
+  </div>
+	<select 
+		class="form-control" 
+		name="selectedOrgUnit" 
+		ng-model="selectedOrgUnit" 
+		ng-options="x.Title for x in orgunits" 
+		ng-change="update_vacancies();" 
+		required>
+	</select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Должность</span>
+    <button 
+	    class="btn btn-success" 
+	    type="button" 
+	    data-toggle="modal" 
+	    data-target="#selectVacancyModal" 
+	    ng-disabled="vacancies_disabled">
+    	Выбрать
+    </button>
+  </div>
+    <input id="position_picker" 
+	    class="form-control" 
+	    name="selectedVacancy.Title" 
+	    ng-model="selectedVacancy.Title" 
+	    ng-readonly="true" 
+	    placeholder="{{selectedOrgUnit ? '' : 'Сначала выберите подразделение...'}}" 
+	    required>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="selectVacancyModal" tabindex="-1" role="dialog" aria-labelledby="selectVacancyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="selectVacancyModalLabel">Штатное расписание "{{selectedOrgUnit.Title}}"</h5>
+      </div>
+      <div class="modal-body">
+		<table id="table" 
+				data-toggle="table" 
+				class="table table-hover" 
+>
+		    <thead>
+			    <tr>
+			        <th data-field="title" data-sortable="true">Должность</th>
+			        <th data-field="salary" data-sortable="true">Оклад, руб.</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="x in vacancies" ng-click="setStyleForTableRow($event, $index, x)">
+			    <td>{{ x.Title }}</td>
+			    <td>{{ x.salary }}</td>
+			  </tr>
+			</tbody>
+		</table>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn btn-success" data-dismiss="modal">Ок</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br/>
+<h2>Отсканируйте документы</h2>
+	
+	<!-- отладочные переменные
+	angular_app window.height: {{windowHeight}}
+    <br />angular_app window.width: {{windowWidth}}
+    <br />
+     !-->
+    
+<label for="source">Выберите сканер</label>
+<select class="form-control" size="1" id="source"></select>
+<!-- <label><input type="checkbox" id="ShowUI">Показывать настройки устройства</label> !-->
+<br/>
+
+<div class="row">
+	<div class="col-9">
+		<div id="dwtcontrolContainer"></div>
+	</div>
+	
+	<div class="col-3">
+		<div class="card w-100" id="buttons_card">
+			      <div class="card-body">
+					<nav class="navbar sticky-top">
+				      	<button ng-click="AcquireImage()" type="button" class="btn btn-success btn-block btn-lg">
+				      		<i class="fas fa-plus"></i> Сканировать
+				      	</button>
+						<br/>
+						
+				      	<button ng-click="RotateImage()" id="rotate_button" type="button" class="btn btn-secondary btn-block">
+				      		<i class="fas fa-sync"></i> Повернуть
+				      	</button>
+					    <br/>
+					    
+						<div class="dropdowns">
+						    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+						       <i class="far fa-trash-alt"></i> Удалить &nbsp
+						    </button>
+						    
+						    <div class="dropdown-menu" id="remove_group_buttons">
+							  <button ng-click="btnRemoveSelectedImages()" type="button" class="btn dropdown-item">
+								Выделенные изображения
+							  </button>
+							  <button ng-click="btnRemoveAllImages()" type="button" class="btn dropdown-item">
+								Все изображения
+							  </button>
+							</div>
+						</div>
+						<br/>
+						<br/>
+						<br/>
+						
+						<button type="button" class="btn btn-primary btn-block btn-lg" ng-click="SaveToSharePoint();" >
+							<i class="far fa-save"></i> Сохранить
+						</button>
+					</nav>
+			      </div>
+			   </div>
+	    </div>
+    </div>
+</form>
+
+
+
+

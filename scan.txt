@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="/it/SiteAssets/scan_app/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+	<!-- angular lib!-->
+	<script src="/it/SiteAssets/scan_app/lib/angular.min.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/lib/angular-route.min.js" type="text/javascript"></script>
+
+	<!-- bootstrap lib!-->
+	<script src="/it/SiteAssets/scan_app/lib/popper.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/it/SiteAssets/scan_app/lib/bootstrap-4.1.0/css/bootstrap.min.css">
+	<script src="/it/SiteAssets/scan_app/lib/bootstrap-4.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+	
+	<!-- datepicker lib!-->
+	<script src="/it/SiteAssets/scan_app/lib/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/lib/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.ru.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/it/SiteAssets/scan_app/lib/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css">
+	<link rel="stylesheet" href="/it/SiteAssets/scan_app/lib/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.standalone.min.css">
+	
+	<!-- bootstrap-table lib!-->
+	<link rel="stylesheet" href="/it/SiteAssets/scan_app/lib/bootstrap-table/dist/bootstrap-table.min.css">
+	<script src="/it/SiteAssets/scan_app/lib/bootstrap-table/dist/bootstrap-table.min.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/lib/bootstrap-table/dist/locale/bootstrap-table-ru-RU.min.js" type="text/javascript"></script>	
+
+
+	<!-- font awesome lib!-->
+	<script defer src="/it/SiteAssets/scan_app/lib/fontawesome-free-5.0.10/svg-with-js/js/fontawesome-all.js"></script>
+	
+    <!-- dynamic web twain lib!-->
+    <script type="text/javascript" src="/it/SiteAssets/scan_app/lib/Resources/dynamsoft.webtwain.initiate.js"> </script>
+    <script type="text/javascript" src="/it/SiteAssets/scan_app/lib/Resources/dynamsoft.webtwain.config.js"> </script>
+
+	<!-- app !-->
+    <link rel="stylesheet" type="text/css" href="/it/SiteAssets/scan_app/css/style.css">
+	<script src="/it/SiteAssets/scan_app/js/app.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/services/baseSvc.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/services/directives.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/services/scan.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/controllers/add_scan.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/controllers/end.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="/it/SiteAssets/scan_app/upload_to_sp.js"> </script>
+</head>
+
+	<body>
+		<div class="container-fluid">
+			<div data-ng-app="scanApp" resize>
+				<div data-ng-view class="scan_app"></div>
+			</div>
+		</div>
+	</body>
+</html>

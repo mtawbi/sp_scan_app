@@ -1,0 +1,24 @@
+a.link_default:visited {
+	color:white;
+}
+
+a.link_success:visited {
+	color:white;
+}
+
+div#remove_group_buttons {
+	top: auto !important;
+	left: auto !important;
+}
+
+#rotate_button {
+	margin-top: 10px;
+}
+
+div#buttons_card {
+	min-width: 245px;
+}
+
+table#table tr {
+	cursor: pointer;
+}
