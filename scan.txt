@@ -44,7 +44,6 @@
 	<script src="/it/SiteAssets/scan_app/js/controllers/add_scan.js" type="text/javascript"></script>
 	<script src="/it/SiteAssets/scan_app/js/controllers/end.js" type="text/javascript"></script>
 
-	<script type="text/javascript" src="/it/SiteAssets/scan_app/upload_to_sp.js"> </script>
 </head>
 
 	<body>

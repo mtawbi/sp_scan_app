@@ -1,15 +1,18 @@
 "use strict";
 (function () {
 	angular.module("scanApp")
-		.controller("addScanCtrl", ["$scope", "scanService","$location", "$window", function ($scope, scanService, $location, $window) {
+		.controller("addScanCtrl", ["$scope", "scanService","$location", "$window", "$q", function ($scope, scanService, $location, $window, $q) {
+			// определяем название библиотеки, куда будем все сохранять
+	         var docLibraryName = 'upload_library',
+	         serverRelativeUrlToFolder = '/it/' + docLibraryName;
 			
-			//названия списков SP
-			var SP_orgunit_list = 'orgunits',
+	         //названия списков SP
+			var SP_orgunit_list = 'org_units',
 				SP_vacancies_list = 'vacancies',
 				SP_type_reception_list = 'type_receptions',
 				SP_rates_list = 'rates',
 				SP_rec_sources_list = 'rec_sources';
-						
+			
 			//инициация сервиса сканирования
 			scanService.Dynamsoft_init();
 			
@@ -18,10 +21,11 @@
 				    startDate: "0d",
 					language: "ru",
 				    autoclose: true,
-				    todayHighlight: true
+				    todayHighlight: true,
+
 				});				
 
-			
+	
 			//устанавливаем начальное состояние поля "Количество ставок"
 			$scope.rates_disabled = true;
 			$scope.rates = [
@@ -58,9 +62,6 @@
 			$scope.setStyleForTableRow = function(ev, index, element){
 				$('.table-success').removeClass('table-success');
 				$(ev.target.parentNode).addClass('table-success');
-				//console.log(ev);
-				//console.log(index);
-				//console.log(element);
 				$scope.selectedVacancy = element;
 			};
 			
@@ -108,12 +109,27 @@
 			$scope.btnRemoveAllImages = function(){
 				scanService.btnRemoveAllImages_onclick();
 			};
-			
 
-			
-			$scope.addVacancy = function () {
-				$location.path("/addVacancy");
+			//обработчик кнопки "Сохранить"
+			$scope.SaveToSharePoint = function(){
+				//объект с данными для записи с библиотеку SP
+	    		var metaForm = {
+	        			"__metadata": { "type": '' }, //этот атрибут будет определен в сервисе baseSvc
+	    				"plan_date": new Date($scope.selectedPlannedDate.slice(6,10)+"-"+$scope.selectedPlannedDate.slice(3,5)+"-"+$scope.selectedPlannedDate.slice(0,2)), //преобразование даты в формат ISO 8601
+	        			"type_reception": $scope.selectedTypeReception.Title,
+	        			"rates": $scope.selectedRates.rate_number,
+	        			"rec_source": $scope.selectedRecSource.Title,
+	        			"org_unit": $scope.selectedOrgUnit.Title,
+	        			"vacancy": $scope.selectedVacancy.Title
+	        		};
+	    		
+	    		$q.all([scanService.SaveToSharePoint_onclick(serverRelativeUrlToFolder, metaForm)]).
+	    			then(function(results) {
+	    			$location.path("/end");
+	    		});
+				
 			};
+		
 			
 			$scope.next = function () {
 				$location.path("/end");

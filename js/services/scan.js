@@ -15,21 +15,16 @@
 			var query = listEndPoint + "/GetByTitle('"+list_name+"')/Items?$filter="+filter_attr+" eq "+lookupItemId+"";
 			return baseService.getRequest(query);
 		};
+
+		var getCurrentUser = function(){
+			var get_user_id_query = "/_api/Web/CurrentUser?$select=Id";
 		
-		var addNew = function(person){
-			var data = {
-				__metadata: { 'type': 'SP.Data.PeopleListItem' },
-				first_name: person.first_name,
-				last_name: person.last_name,
-				mobile: person.mobile,
-				ext_tel: person.ext_tel,
-				position: person.position,
-				email: person.email
-			};
-			var url = listEndPoint + "/GetByTitle('People')/Items";
-			return baseService.postRequest(data,url);
+			return baseService.getRequest(get_user_id_query).then(function (response) {
+				var get_user_data_query = "/_api/Web/SiteUserInfoList/Items("+response.data.d.Id+")?$select=FirstName,LastName,UserName,EMail";
+				return baseService.getRequest(get_user_data_query);
+			});
 		};
-		
+	
 		var Dynamsoft_init = function (){
 	        Dynamsoft.WebTwainEnv.RegisterEvent('OnWebTwainReady', function(){ //This event is triggered as soon as Dynamic Web TWAIN is successfully loaded and initialized on the page.
 	        DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer');    // Get the Dynamic Web TWAIN object that is embeded in the div with id 'dwtcontrolContainer'
@@ -160,10 +155,33 @@
             		return false;
             }
         };
+        
+        var SaveToSharePoint_onclick = function(serverRelativeUrlToFolder, metaData){
+			if (DWObject) {
+				if (DWObject.HowManyImagesInBuffer > 0) {
+					var i = 0;
+					var all_images = [];
+					while (i < DWObject.HowManyImagesInBuffer) {
+					  all_images[all_images.length] = i
+					  i++;
+					}
+					//боевое получение blob
+					//var blobImg = DWObject.ConvertToBlob (all_images, EnumDWT_ImageType.IT_PDF); //конвертируем изображения в blob-объект
+				}
+				
+				//тестовое получение blob
+				var mystring = "Hello World!";
+				var blobImg = new Blob([mystring], {
+				    type: 'text/plain'
+				});
+          	 	
+				baseService.uploadFile(blobImg, serverRelativeUrlToFolder, metaData); // (при боевом применении перенести в скобку DWObject.HowManyImagesInBuffer > 0) отправляем файл в библиотеку SharePoint
+			}        	
+        };
 	       
 		return{
 			getAll:getAll,
-			addNew:addNew,
+			getCurrentUser:getCurrentUser,
 			Dynamsoft_init:Dynamsoft_init,
 			AcquireImage:AcquireImage,
 			btnRemoveSelectedImages_onclick:btnRemoveSelectedImages_onclick,
@@ -171,7 +189,8 @@
 			btnRotateImage_onclick:btnRotateImage_onclick,
 			update_DWObject_width:update_DWObject_width,
 			available_images:available_images,
-			getAllByLookupItemId:getAllByLookupItemId
+			getAllByLookupItemId:getAllByLookupItemId,
+			SaveToSharePoint_onclick:SaveToSharePoint_onclick
 		};
 	}]);
 })();
