@@ -42,7 +42,7 @@
 	<script src="/it/SiteAssets/scan_app/js/services/directives.js" type="text/javascript"></script>
 	<script src="/it/SiteAssets/scan_app/js/services/scan.js" type="text/javascript"></script>
 	<script src="/it/SiteAssets/scan_app/js/controllers/add_scan.js" type="text/javascript"></script>
-	<script src="/it/SiteAssets/scan_app/js/controllers/end.js" type="text/javascript"></script>
+	<script src="/it/SiteAssets/scan_app/js/controllers/all.js" type="text/javascript"></script>
 
 </head>
 

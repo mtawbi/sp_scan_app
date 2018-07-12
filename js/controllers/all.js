@@ -1,7 +1,7 @@
 "use strict";
 (function () {
 	angular.module("scanApp")
-		.controller("endCtrl", ["$scope", "$rootScope", "scanService",
+		.controller("allCtrl", ["$scope", "$rootScope", "scanService",
 		function ($scope, $rootScope, scanService) {
 			// определяем название библиотеки, откуда будем читать
 	         var docLibraryName = 'upload_library',
@@ -14,7 +14,7 @@
 			});	
 			
 			//получаем все заявки для текущего пользователя
-			scanService.getAll(docLibraryName, 'Title')
+			scanService.getAll(docLibraryName, 'vacancy,org_unit,rec_source,rates,type_reception,plan_date')
 				.then(function (response) {
 	            $scope.records = response.data.d.results; 
 			});

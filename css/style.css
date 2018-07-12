@@ -22,3 +22,8 @@ div#buttons_card {
 table#table tr {
 	cursor: pointer;
 }
+
+
+.vacancy_card {
+	margin-top: 20px;
+}

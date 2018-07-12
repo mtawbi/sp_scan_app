@@ -116,23 +116,25 @@
 	    		var metaForm = {
 	        			"__metadata": { "type": '' }, //этот атрибут будет определен в сервисе baseSvc
 	    				"plan_date": new Date($scope.selectedPlannedDate.slice(6,10)+"-"+$scope.selectedPlannedDate.slice(3,5)+"-"+$scope.selectedPlannedDate.slice(0,2)), //преобразование даты в формат ISO 8601
-	        			"type_reception": $scope.selectedTypeReception.Title,
-	        			"rates": $scope.selectedRates.rate_number,
-	        			"rec_source": $scope.selectedRecSource.Title,
-	        			"org_unit": $scope.selectedOrgUnit.Title,
-	        			"vacancy": $scope.selectedVacancy.Title
+	        			"type_reception": $scope.selectedTypeReception.Title.toString(),
+	        			"type_reception_id": parseInt($scope.selectedTypeReception.ID),
+	        			"rates": $scope.selectedRates.rate_number.toString(),
+	        			"rates_id": parseInt($scope.selectedRates.ID),
+	        			"rec_source": $scope.selectedRecSource.Title.toString(),
+	        			"rec_source_id": parseInt($scope.selectedRecSource.ID),
+	        			"org_unit": $scope.selectedOrgUnit.Title.toString(),
+	        			"org_unit_id": parseInt($scope.selectedOrgUnit.ID),
+	        			"vacancy": $scope.selectedVacancy.Title.toString(),
+	        			"vacancy_id": parseInt($scope.selectedVacancy.ID)
 	        		};
 	    		
 	    		$q.all([scanService.SaveToSharePoint_onclick(serverRelativeUrlToFolder, metaForm)]).
 	    			then(function(results) {
-	    			$location.path("/end");
+	    			$location.path("/all");
 	    		});
 				
 			};
-		
+	
 			
-			$scope.next = function () {
-				$location.path("/end");
-			};
 	}]);
 })();

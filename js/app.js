@@ -7,9 +7,9 @@
 			templateUrl: "/it/SiteAssets/scan_app/templates/add_scan.html",
 			controller: "addScanCtrl"
 		})
-		.when("/end", {
-			templateUrl: "/it/SiteAssets/scan_app/templates/end.html",
-			controller: "endCtrl"
+		.when("/all", {
+			templateUrl: "/it/SiteAssets/scan_app/templates/all.html",
+			controller: "allCtrl"
 		});
 	}]);
 })();
