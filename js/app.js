@@ -4,11 +4,11 @@
 		.config(["$routeProvider", function ($routeProvider) {
 		$routeProvider
 		.when("/", {
-			templateUrl: "/it/SiteAssets/scan_app/templates/add_scan.html",
+			templateUrl: "/it/isd/SiteAssets/sp_scan_app/templates/add_scan.html",
 			controller: "addScanCtrl"
 		})
 		.when("/all", {
-			templateUrl: "/it/SiteAssets/scan_app/templates/all.html",
+			templateUrl: "/it/isd/SiteAssets/sp_scan_app/templates/all.html",
 			controller: "allCtrl"
 		});
 	}]);

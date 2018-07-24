@@ -1,12 +1,13 @@
 "use strict";
 (function () {
     angular.module("scanApp")
-        .service("baseSvc", ["$http", "$q", function ($http, $q) {
+        .service("baseSvc", ["$http", "$q", "$window", function ($http, $q, $window) {
         var baseUrl = _spPageContextInfo.webAbsoluteUrl;
         
         var getRequest = function (query) {
-            var deferred = $q.defer(); //The purpose of the deferred object is to expose the associated Promise instance as well as APIs that can be used for signaling the successful or unsuccessful completion, as well as the status of the task.
-            $http({ 
+            var deferred = $q.defer(); //object which represents a task which will finish in the future.
+            
+            $http({ //promise 
                 url: baseUrl + query,
                 method: "GET",
                 headers: { 
@@ -175,12 +176,15 @@
 	                 // Get the list item that corresponds to the uploaded file.
 	                  var getItem = getListItem(file.d.ListItemAllFields.__deferred.uri);
 	                  getItem.done(function (listItem, status, xhr) {
-        	  
+	                	   console.log('loaded!');  
+	                 	   setTimeout(function() {
+	                 		   $window.location.reload()
+	               	      	}, 1500);
 		                  //Change the display name and title of the list item.
-	                      var changeItem = updateListItem(listItem, metaData);
-	                      changeItem.done(function (data, status, xhr) {
-	                      });
-	                      changeItem.fail(onError);
+	                      //var changeItem = updateListItem(listItem, metaData);
+	                      //changeItem.done(function (data, status, xhr) {
+	                      //});
+	                      //changeItem.fail(onError);
 	                  });
 	                  getItem.fail(onError);
 	             });
@@ -189,7 +193,8 @@
 	         getFile.fail(onError);
 	
 	     };
-	        
+	    
+	     
         return {
             getRequest: getRequest,
             postRequest: postRequest,

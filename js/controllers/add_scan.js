@@ -3,28 +3,32 @@
 	angular.module("scanApp")
 		.controller("addScanCtrl", ["$scope", "scanService","$location", "$window", "$q", function ($scope, scanService, $location, $window, $q) {
 			// определяем название библиотеки, куда будем все сохранять
-	         var docLibraryName = 'upload_library',
-	         serverRelativeUrlToFolder = '/it/' + docLibraryName;
-			
+	         var url = new URL($location.absUrl()),
+	         serverRelativeUrlToFolder = url.searchParams.get("RootFolder");
+	         
+	         $scope.button_load_disabled = false;
+	         $scope.load_button_text = "Сохранить";
+	         
 	         //названия списков SP
-			var SP_orgunit_list = 'org_units',
+			/*var SP_orgunit_list = 'org_units',
 				SP_vacancies_list = 'vacancies',
 				SP_type_reception_list = 'type_receptions',
 				SP_rates_list = 'rates',
 				SP_rec_sources_list = 'rec_sources';
+			*/
 			
 			//инициация сервиса сканирования
 			scanService.Dynamsoft_init();
 			
 			//инициация датапикера
-				$("input#datepicker").datepicker({
+			/*	$("input#datepicker").datepicker({
 				    startDate: "0d",
 					language: "ru",
 				    autoclose: true,
 				    todayHighlight: true,
 
 				});				
-
+			
 	
 			//устанавливаем начальное состояние поля "Количество ставок"
 			$scope.rates_disabled = true;
@@ -48,7 +52,7 @@
 			
 			//обновление должностей при изменении подразделения
 			$scope.update_vacancies = function(){
-				scanService.getAllByLookupItemId(SP_vacancies_list, 'orgunitId', $scope.selectedOrgUnit.ID)				
+				scanService.getAllByLookupItemId(SP_vacancies_list, 'org_unitId', $scope.selectedOrgUnit.ID)				
 					.then(function (response) {
 						$scope.vacancies = response.data.d.results;
 						$scope.selectedVacancy = '';
@@ -90,6 +94,8 @@
 	            $scope.orgunits = response.data.d.results;
 			});
 			
+			*/
+			
 			//обработчик кнопки "Сканировать"
 			$scope.AcquireImage = function(){
 				scanService.AcquireImage();
@@ -112,10 +118,13 @@
 
 			//обработчик кнопки "Сохранить"
 			$scope.SaveToSharePoint = function(){
+				$scope.button_load_disabled = true;
+		        $scope.load_button_text = "Сохранение...";				
 				//объект с данными для записи с библиотеку SP
 	    		var metaForm = {
-	        			"__metadata": { "type": '' }, //этот атрибут будет определен в сервисе baseSvc
-	    				"plan_date": new Date($scope.selectedPlannedDate.slice(6,10)+"-"+$scope.selectedPlannedDate.slice(3,5)+"-"+$scope.selectedPlannedDate.slice(0,2)), //преобразование даты в формат ISO 8601
+	        			"__metadata": { "type": '' } //этот атрибут будет определен в сервисе baseSvc
+	    				/* 
+	    				 "plan_date": new Date($scope.selectedPlannedDate.slice(6,10)+"-"+$scope.selectedPlannedDate.slice(3,5)+"-"+$scope.selectedPlannedDate.slice(0,2)), //преобразование даты в формат ISO 8601
 	        			"type_reception": $scope.selectedTypeReception.Title.toString(),
 	        			"type_reception_id": parseInt($scope.selectedTypeReception.ID),
 	        			"rates": $scope.selectedRates.rate_number.toString(),
@@ -126,13 +135,11 @@
 	        			"org_unit_id": parseInt($scope.selectedOrgUnit.ID),
 	        			"vacancy": $scope.selectedVacancy.Title.toString(),
 	        			"vacancy_id": parseInt($scope.selectedVacancy.ID)
+	        			*/
 	        		};
 	    		
-	    		$q.all([scanService.SaveToSharePoint_onclick(serverRelativeUrlToFolder, metaForm)]).
-	    			then(function(results) {
-	    			$location.path("/all");
-	    		});
-				
+	    		scanService.SaveToSharePoint_onclick(serverRelativeUrlToFolder, metaForm)
+			
 			};
 	
 			

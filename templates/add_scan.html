@@ -1,3 +1,5 @@
+
+<!--
 <h2>Введите данные</h2>
 <form name="scanForm" novalidate>
 <div class="input-group mb-3">
@@ -89,7 +91,7 @@
 </div>
 
 
-<!-- Modal -->
+
 <div class="modal fade" id="selectVacancyModal" tabindex="-1" role="dialog" aria-labelledby="selectVacancyModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -100,7 +102,7 @@
 		<table id="table" 
 				data-toggle="table" 
 				class="table table-hover" 
->
+		>
 		    <thead>
 			    <tr>
 			        <th data-field="title" data-sortable="true">Должность</th>
@@ -124,6 +126,8 @@
 
 
 <br/>
+
+ -->
 <h2>Отсканируйте документы</h2>
 	
 	<!-- отладочные переменные
@@ -174,8 +178,8 @@
 						<br/>
 						<br/>
 						
-						<button type="button" class="btn btn-primary btn-block btn-lg" ng-click="SaveToSharePoint();" >
-							<i class="far fa-save"></i> Сохранить
+						<button type="button" class="btn btn-primary btn-block btn-lg" ng-click="SaveToSharePoint();" ng-disabled="button_load_disabled">
+							<i class="far fa-save"></i> {{load_button_text}}
 						</button>
 					</nav>
 			      </div>
@@ -184,21 +188,3 @@
     </div>
 </form>
 
-
-
-
-<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor msdt:dt="string">Sobolev, Aleksandr</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor>
-<mso:xd_Signature msdt:dt="string"></mso:xd_Signature>
-<mso:TemplateUrl msdt:dt="string"></mso:TemplateUrl>
-<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author msdt:dt="string">Sobolev, Aleksandr</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author>
-<mso:xd_ProgID msdt:dt="string"></mso:xd_ProgID>
-<mso:SharedWithUsers msdt:dt="string"></mso:SharedWithUsers>
-<mso:ContentTypeId msdt:dt="string">0x01010044DA998AFE1CF24EBA484C2F927A2A5F</mso:ContentTypeId>
-<mso:_SourceUrl msdt:dt="string"></mso:_SourceUrl>
-<mso:_SharedFileIndex msdt:dt="string"></mso:_SharedFileIndex>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
-<title></title></head>

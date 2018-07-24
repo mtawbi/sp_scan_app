@@ -5,7 +5,7 @@
 		function ($scope, $rootScope, scanService) {
 			// определяем название библиотеки, откуда будем читать
 	         var docLibraryName = 'upload_library',
-	         serverRelativeUrlToFolder = '/it/' + docLibraryName;
+	         serverRelativeUrlToFolder = '/it/isd/' + docLibraryName;
 			
 			//получаем текущего пользователя
 			scanService.getCurrentUser()
@@ -14,7 +14,7 @@
 			});	
 			
 			//получаем все заявки для текущего пользователя
-			scanService.getAll(docLibraryName, 'vacancy,org_unit,rec_source,rates,type_reception,plan_date')
+			scanService.getAll(docLibraryName, 'EncodedAbsUrl,vacancy,org_unit,rec_source,rates,type_reception,plan_date')
 				.then(function (response) {
 	            $scope.records = response.data.d.results; 
 			});
